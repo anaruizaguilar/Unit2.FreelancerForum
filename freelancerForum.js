@@ -19,23 +19,30 @@ const freelancers = [
     },
 ];
 
-// TO DO: Interval is set to add a freelancer and render every few seconds. 
-const addPriceIntervalId = setInterval(addFreelancer(), 2000);
-
 //Render function:
 function render() {
     // TO DO: 'document.queerySelector' is used to select existing DOM elements.
-    const freelancerList = document.querySelector("#freelancers");
-    const listElements = freelancers.map((freelancers) => {
-        const element = document.createElement("ul");
-        element.classList.add(freelancers);
-        return element;
+    const freelancerListing = document.querySelector("#freelancers");
+    const template = freelancers.map((data) => {
+        const tr = document.createElement("tr");
+        const td1 = document.createElement("td");
+        td1.textContent = freelancers.name;
+        const td2 = document.createElement("td");
+        td2.textContent = freelancers.occupation;
+        const td3 = document.createElement("td");
+        td3.textContent = freelancers.price;
+        tr.append(td1,td2,td3);
+        return tr;
     });
-    freelancerList.replaceChildren(...listElements);
+    
+    freelancerListing.replaceChildren(...template);
 };
 
 // TO DO: Render initial array of freelancers onto the page. 
 render();
+
+// TO DO: Interval is set to add a freelancer and render every few seconds. 
+const addPriceIntervalId = setInterval(addFreelancer(), 2000);
 
 function addFreelancer() {
     const name = names[Math.floor(Math.random() * names.length)];
