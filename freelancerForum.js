@@ -1,9 +1,10 @@
 /* State */
 // Here, we define variables for the data that our program needs to remember.
 // TO DO: Initialize an array of names and an array of occupations
-const names = ["Alice", "Bob", "Carol", "Remus"];
-const occupations = ["Writer", "Teacher", "Programmer", "Bounty-Hunter"];
+const names = ["Alice", "Bob", "Carol", "Remus", "Gertrude", "Nichael"];
+const occupations = ["Writer", "Teacher", "Programmer", "Bounty-Hunter", "Revenge-Seeker"];
 const prices = [30.00, 50.00, 70.00, 40.00];
+const maxListings = 25;
 
 // TO DO: Initialize an array of at least two freelancers with names, occupations, and starting prices.
 const freelancers = [
@@ -20,18 +21,18 @@ const freelancers = [
 ];
 
 //Render function:
-function render() {
+function renderListing() {
     // TO DO: 'document.queerySelector' is used to select existing DOM elements.
-    const freelancerListing = document.querySelector("#freelancers");
+    const freelancerListing = document.querySelector("tbody");
     const template = freelancers.map((data) => {
         const tr = document.createElement("tr");
         const td1 = document.createElement("td");
-        td1.textContent = freelancers.name;
+        td1.textContent = data.name;
         const td2 = document.createElement("td");
-        td2.textContent = freelancers.occupation;
+        td2.textContent = data.occupation;
         const td3 = document.createElement("td");
-        td3.textContent = freelancers.price;
-        tr.append(td1,td2,td3);
+        td3.textContent = data.price;
+        tr.append(td1, td2, td3);
         return tr;
     });
     
@@ -39,10 +40,10 @@ function render() {
 };
 
 // TO DO: Render initial array of freelancers onto the page. 
-render();
+renderListing();
 
 // TO DO: Interval is set to add a freelancer and render every few seconds. 
-const addPriceIntervalId = setInterval(addFreelancer(), 2000);
+const addFeelancerIntervalId = setInterval(addFreelancer, 1000);
 
 function addFreelancer() {
     const name = names[Math.floor(Math.random() * names.length)];
@@ -50,17 +51,28 @@ function addFreelancer() {
     const price = prices[Math.floor(Math.random() * prices.length)];
     freelancers.push({ name, occupation, price });
 
-    render();
+    renderListing();
+
+    if(freelancers.length >= maxListings) {
+        clearInterval(addFeelancerIntervalId);
+    }
 }
 // TO DO: Function that calculates the average starting price of the freelancers array.
-function getMean(freelancers) {
+function getMean(...freelancers) {
     let sum = 0;
     let mean = 0;
-    for(let i = 0; i < freelancers.price.length; i++) {
-      sum += freelancers.price[i];
-      mean += sum / freelancers.price.length;
+    for(let i = 0; i < freelancers.length; i++) {
+      sum += freelancers[i];
+      mean += sum / freelancers.length;
     }
     return mean;
   };
+
 // TO DO: DOM is updated to reflect the average starting price.
 
+function renderAvgPrice() {
+    const avgPrice = document.querySelector("p");
+    avgPrice.textContent = "The starting average price is $" + getMean();
+}
+
+renderAvgPrice();
