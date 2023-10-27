@@ -58,14 +58,29 @@ function addFreelancer() {
     }
 }
 // TO DO: Function that calculates the average starting price of the freelancers array.
-function getMean(...freelancers) {
-    let sum = 0;
-    let mean = 0;
-    for(let i = 0; i < freelancers.length; i++) {
-      sum += freelancers[i];
-      mean += sum / freelancers.length;
-    }
-    return mean;
+function getMean() {
+// TEST: kept getting "undefined" when trying to access price property within Freelancers object with dot notation.
+//   const test = freelancers.map((data) => {
+//     console.log(data.price);
+//   });
+//   return test;
+
+    //Trying to get sum with map + for loop. Returns "NaN"
+    // let sum = 0;
+    // freelancers.map((cost) => {
+    //     for(let i = 0; i < cost.price; i++) {
+    //         sum += cost.price[i];
+    //     };
+    //     return sum;
+    // });
+    // console.log(sum);
+
+    //Sum with map + reduce function (?) Result: Uncaught TypeError: cost.price.reduce is not a function
+    let sum = freelancers.map((cost) => {
+        cost.price.reduce((accum, num) => accum + num.price, 0);
+        return sum;
+    })
+    console.log(sum);
   };
 
 // TO DO: DOM is updated to reflect the average starting price.
