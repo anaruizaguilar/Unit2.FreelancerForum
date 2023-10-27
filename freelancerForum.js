@@ -4,7 +4,7 @@
 const names = ["Alice", "Bob", "Carol", "Remus", "Gertrude", "Nichael"];
 const occupations = ["Writer", "Teacher", "Programmer", "Bounty-Hunter", "Revenge-Seeker"];
 const prices = [30.00, 50.00, 70.00, 40.00];
-const maxListings = 25;
+const maxListings = 10;
 
 // TO DO: Initialize an array of at least two freelancers with names, occupations, and starting prices.
 const freelancers = [
@@ -64,23 +64,12 @@ function getMean() {
 //     console.log(data.price);
 //   });
 //   return test;
-
-    //Trying to get sum with map + for loop. Returns "NaN"
-    // let sum = 0;
-    // freelancers.map((cost) => {
-    //     for(let i = 0; i < cost.price; i++) {
-    //         sum += cost.price[i];
-    //     };
-    //     return sum;
-    // });
-    // console.log(sum);
-
-    //Sum with map + reduce function (?) Result: Uncaught TypeError: cost.price.reduce is not a function
-    let sum = freelancers.map((cost) => {
-        cost.price.reduce((accum, num) => accum + num.price, 0);
-        return sum;
-    })
+    addFreelancer();
+    const sum = freelancers.reduce((accum, freelancer) => accum + freelancer.price, 0);
     console.log(sum);
+    const mean = sum / freelancers.length;
+    console.log(mean);
+    return mean;
   };
 
 // TO DO: DOM is updated to reflect the average starting price.
