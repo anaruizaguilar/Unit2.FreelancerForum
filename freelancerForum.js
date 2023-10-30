@@ -46,17 +46,21 @@ renderListing();
 const addFeelancerIntervalId = setInterval(addFreelancer, 1000);
 
 function addFreelancer() {
+    renderListing();
     const name = names[Math.floor(Math.random() * names.length)];
     const occupation = occupations[Math.floor(Math.random() * occupations.length)];
     const price = prices[Math.floor(Math.random() * prices.length)];
     freelancers.push({ name, occupation, price });
 
-    renderListing();
-
+    renderAvgPrice();
+    
     if(freelancers.length >= maxListings) {
         clearInterval(addFeelancerIntervalId);
     }
 }
+
+renderAvgPrice();
+
 // TO DO: Function that calculates the average starting price of the freelancers array.
 function getMean() {
 // TEST: kept getting "undefined" when trying to access price property within Freelancers object with dot notation.
@@ -64,12 +68,12 @@ function getMean() {
 //     console.log(data.price);
 //   });
 //   return test;
-    addFreelancer();
+    
     const sum = freelancers.reduce((accum, freelancer) => accum + freelancer.price, 0);
     console.log(sum);
     const mean = sum / freelancers.length;
     console.log(mean);
-    return mean;
+    return mean.toFixed();
   };
 
 // TO DO: DOM is updated to reflect the average starting price.
@@ -79,4 +83,4 @@ function renderAvgPrice() {
     avgPrice.textContent = "The starting average price is $" + getMean();
 }
 
-renderAvgPrice();
+
